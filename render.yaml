@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: getcontact-telegram-bot
+    env: php
+    buildCommand: ""
+    startCommand: php -S 0.0.0.0:$PORT
+    healthCheckPath: /
