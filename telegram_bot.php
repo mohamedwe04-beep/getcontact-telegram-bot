@@ -19,11 +19,11 @@ use Restugbk\GetContact;
 // ═══════════════════════════════════════════════════════
 
 // GetContact Credentials
-$token    = 'dibVBTdddd51491e692ac0c2df6448df206adcc8c101b6dbd746ca3c8a';
-$finalKey = '506e9091b355d6ed5ceba301699bd6bb32c867a4b85375e7083fdea095ae7918';
+$token    = getenv('GETCONTACT_TOKEN') ?: 'dibVBTdddd51491e692ac0c2df6448df206adcc8c101b6dbd746ca3c8a';
+$finalKey = getenv('GETCONTACT_FINAL_KEY') ?: '506e9091b355d6ed5ceba301699bd6bb32c867a4b85375e7083fdea095ae7918';
 
 // Telegram Bot Token (اطلبه من @BotFather)
-$telegramToken = '8571827626:AAHQTBeOaT9IAFdLxiW_lOplvTXq0vltWFg';
+$telegramToken = getenv('TELEGRAM_BOT_TOKEN') ?: 'YOUR_BOT_TOKEN_HERE';
 
 // ═══════════════════════════════════════════════════════
 // 📥 استقبال الرسائل من تليجرام
