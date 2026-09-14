@@ -183,7 +183,12 @@ module.exports = async (req, res) => {
       msg += `\n━━━━━━━━━━━━━━━━\n🔍 ابحث عن رقم آخر!`;
       await sendTG(chatId, msg, TGTOK);
     } else {
-      await sendTG(chatId, `ℹ️ RAW: ${JSON.stringify(json).slice(0,1000)}`, TGTOK);
+      const errMsg = json?.meta?.errorMessage || '';
+if (errMsg.includes('query limit')) {
+  await sendTG(chatId, `⚠️ *تم تجاوز الحد اليومي للبحث*\n\nحاول مرة أخرى غداً أو استخدم توكن جديد.`, TGTOK);
+} else {
+  await sendTG(chatId, `ℹ️ *الرقم:* \`${phone}\`\n\nلا توجد أسماء مسجلة.`, TGTOK);
+}
     }
   } catch (err) {
     await sendTG(chatId, `❌ خطأ: ${err.message}`, TGTOK);
