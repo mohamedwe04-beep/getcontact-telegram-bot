@@ -130,7 +130,7 @@ module.exports = async (req, res) => {
 
     const resp = await httpPost(apiUrl, { data: e }, {
       'X-Os': 'android 9', 'X-Mobile-Service': 'GMS', 'X-App-Version': '5.6.2',
-      'X-Client-Device-Id': '63c063f778cc6ee4', 'X-Lang': 'en_US',
+      'X-Client-Device-Id': '93b089d5f4213534', 'X-Lang': 'en_US',
       'X-Token': TOK, 'X-Req-Timestamp': ts, 'X-Encrypted': '1',
       'X-Network-Country': 'us', 'X-Country-Code': 'us',
       'X-Req-Signature': s, 'Content-Type': 'application/json'
