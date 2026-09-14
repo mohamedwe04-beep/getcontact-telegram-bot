@@ -183,7 +183,7 @@ module.exports = async (req, res) => {
       msg += `\n━━━━━━━━━━━━━━━━\n🔍 ابحث عن رقم آخر!`;
       await sendTG(chatId, msg, TGTOK);
     } else {
-       await sendTG(chatId, `ℹ️ *الرقم:* \`${phone}\`\n\nلا توجد أسماء مسجلة.\n\nRAW: ${JSON.stringify(json).slice(0,500)}`, TGTOK);
+      await sendTG(chatId, `ℹ️ *الرقم:* \`${phone}\`\n\nلا توجد أسماء مسجلة.`, TGTOK);
     }
   } catch (err) {
     await sendTG(chatId, `❌ خطأ: ${err.message}`, TGTOK);
