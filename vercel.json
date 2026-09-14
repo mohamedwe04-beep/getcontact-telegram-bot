@@ -3,7 +3,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/api/webhook.js"
+      "dest": "/api/webhook"
     }
   ]
 }
