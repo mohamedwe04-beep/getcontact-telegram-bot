@@ -113,6 +113,38 @@ module.exports = async (req, res) => {
     return res.status(200).json({ ok: true });
   }
 
+  // أمر Debug مؤقت
+  if (text.startsWith('/debug ')) {
+    const phone = text.replace('/debug ', '').trim();
+    try {
+      const payload = JSON.stringify({ countryCode: 'us', phoneNumber: phone, source: 'profile', token: TOK });
+      const ts      = String(Math.round(Date.now()));
+      const s       = genSig(ts, payload, HMAC);
+      const e       = enc(payload, FK);
+      const apiUrl  = Buffer.from(API_URL, 'hex').toString('utf8');
+      const resp = await httpPost(apiUrl, { data: e }, {
+        'X-Os': 'android 9', 'X-Mobile-Service': 'GMS', 'X-App-Version': '5.6.2',
+        'X-Client-Device-Id': '93b089d5f4213534', 'X-Lang': 'en_US',
+        'X-Token': TOK, 'X-Req-Timestamp': ts, 'X-Encrypted': '1',
+        'X-Network-Country': 'us', 'X-Country-Code': 'us',
+        'X-Req-Signature': s, 'Content-Type': 'application/json'
+      });
+      let rawMsg = `🔍 Raw Response:\n\`\`\`\n${JSON.stringify(resp, null, 2).slice(0, 3000)}\n\`\`\``;
+      if (resp && resp.data) {
+        try {
+          const decrypted = dec(resp.data, FK);
+          rawMsg += `\n\n🔓 Decrypted:\n\`\`\`\n${decrypted.slice(0, 2000)}\n\`\`\``;
+        } catch(de) {
+          rawMsg += `\n\nDecrypt error: ${de.message}`;
+        }
+      }
+      await sendTG(chatId, rawMsg, TGTOK);
+    } catch(err) {
+      await sendTG(chatId, `❌ Debug Error: ${err.message}`, TGTOK);
+    }
+    return res.status(200).json({ ok: true });
+  }
+
   const phone = text.trim().replace(/[\s\-\(\)]/g, '');
   if (!/^[\+]?[0-9]{10,15}$/.test(phone)) {
     await sendTG(chatId, `❌ رقم غير صحيح\n\nمثال: +201234567890`, TGTOK);
